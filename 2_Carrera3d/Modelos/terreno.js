@@ -1,23 +1,24 @@
 // Crear un terreno básico con Three.js usando una matriz
-import { crearEdificio } from './edificio.js';
+import { crearEdificio as crearEdificioGenerico } from './edificio.js';
+import { crearEdificio as crearEdificioInformatica } from './edificioInformatica.js';
+import { crearComedor } from './comedor.js';
 import { crearArbol } from './arbol.js';
 
 export function crearTerreno(scale = 4) {
   const grupoTerreno = new THREE.Group();
 
-  // Matriz base actual 11x11 (1: verde, 2: calles,4: edificio, 3: árbol)
+  // Matriz base actual 11x11 (1: verde, 2: calles,4: edificio informatica, 3: árbol,5 edificio)
   const mapaBase = [
     [1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1],
-    [1, 1, 4, 4, 2, 2, 3, 1, 1, 1, 1],
-    [1, 1, 4, 2, 2, 2, 2, 2, 1, 1, 1],
-    [1, 1, 4, 2, 2, 1, 1, 2, 3, 1, 1],
-    [1, 1, 1, 2, 2, 1, 1, 2, 2, 2, 2],
-    [1, 1, 1, 2, 2, 2, 2, 2, 3, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1]
+    [1, 1, 4, 4, 2, 2, 5, 5, 1, 1, 1],
+    [1, 1, 4, 2, 2, 2, 2, 2, 1, 4, 4],
+    [1, 1, 4, 2, 1, 1, 1, 2, 3, 1, 1],
+    [1, 6, 2, 2, 1, 1, 1, 2, 2, 2, 2],
+    [1, 6, 6, 1, 2, 2, 2, 2, 3, 6, 6],
+    [1, 6, 6, 1, 5, 5, 1, 2, 1, 6, 6],
+    [1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+    [5, 5, 5, 5, 5, 5, 1, 2, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 2, 1, 3, 1]
   ];
 
   // Expandir la matriz a scale veces en cada dimensión (por defecto scale=4 -> 44x44)
@@ -58,30 +59,35 @@ export function crearTerreno(scale = 4) {
       const colBase = Math.floor(j / scale);
       const claveBase = `${filaBase}-${colBase}`;
 
-      // Si el valor es 4, crear un edificio en esa celda
-      if (valor === 4) {
+      // Si el valor es 4,5 o 6, crear un edificio/comedor en esa celda
+      if (valor === 4 || valor === 5 || valor === 6) {
         // añadir una celda de suelo bajo el edificio
         const suelo = new THREE.Mesh(geometriaCelda, materialVerde);
         suelo.position.set(x, alturaCelda / 2, z);
         grupoTerreno.add(suelo);
-
-        // Solo crear el edificio una vez por bloque base
-        if (!objetosCreados.has(`edificio-${claveBase}`)) {
+        // Solo crear el edificio una vez por bloque base y por tipo
+        const tipo = valor === 4 ? 'informatica' : (valor === 5 ? 'generico' : 'comedor');
+        const keyEd = `edificio-${tipo}-${claveBase}`;
+        if (!objetosCreados.has(keyEd)) {
           try {
-            const edificio = crearEdificio();
+            let crear;
+            if (valor === 4) crear = crearEdificioInformatica;
+            else if (valor === 5) crear = crearEdificioGenerico;
+            else crear = crearComedor;
+            const edificio = crear();
             // Posicionar en el centro del bloque escalado
             const xCentro = (colBase * scale + scale / 2) - colsN / 2 + 0.5;
             const zCentro = (filaBase * scale + scale / 2) - filasN / 2 + 0.5;
             edificio.position.set(xCentro, 0, zCentro);
             grupoTerreno.add(edificio);
-            objetosCreados.add(`edificio-${claveBase}`);
+            objetosCreados.add(keyEd);
           } catch (e) {
             const placeholder = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: 0xaaaaaa }));
             const xCentro = (colBase * scale + scale / 2) - colsN / 2 + 0.5;
             const zCentro = (filaBase * scale + scale / 2) - filasN / 2 + 0.5;
             placeholder.position.set(xCentro, 0.5, zCentro);
             grupoTerreno.add(placeholder);
-            objetosCreados.add(`edificio-${claveBase}`);
+            objetosCreados.add(keyEd);
           }
         }
         continue;

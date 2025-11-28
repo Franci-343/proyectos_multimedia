@@ -4,7 +4,7 @@ export function crearEdificio() {
 
   // Crear la base del edificio (aumentamos el ancho)
   const width = 6;
-  const height = 5;
+  const height = 8;
   const depth = 4;
   const geometriaBase = new THREE.BoxGeometry(width, height, depth);
   const materialBase = new THREE.MeshStandardMaterial({ color: 0xFFA000 });
