@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo 3D del Edificio</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <link rel="stylesheet" href="estilos/estilos.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">UMSA</div>
+        <div class="brand-text">
+          <div class="title">Carrera de Informática</div>
+          <div class="subtitle">Proyecto 3D — Modelo</div>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#" class="nav-link">Inicio</a>
+        <a href="#" class="nav-link">Modelo</a>
+        <a href="#" class="nav-link">Recursos</a>
+        <a href="#" class="nav-link cta">Ver en 3D</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <section class="hero container">
+      <h1>Modelo 3D</h1>
+      <p class="lead">Proyecto para la materia de desarrollo de aplicaciones multimedia</p>
+    </section>
+
+    <section id="viewer" class="viewer container">
+      <!-- Aquí se añadirá el canvas de Three.js cuando cargues el renderizador -->
+      <p class="hint">Abre la página en un servidor local y el visor 3D se inicializará aquí.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <strong>UMSA</strong> - Carrera de Informática</div>
+      <div class="footer-links">
+        <a href="#">Contacto</a>
+        <a href="#">Documentación</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
