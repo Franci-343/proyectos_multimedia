@@ -31,11 +31,14 @@
     <section class="hero container">
       <h1>Modelo 3D</h1>
       <p class="lead">Proyecto para la materia de desarrollo de aplicaciones multimedia</p>
+      <div style="background:#f0f9ff;padding:12px;border-radius:8px;margin:12px 0;font-size:14px;color:#0369a1;">
+        <strong>🎮 Controles:</strong> 
+        <span style="margin-left:8px;">🖱️ Click y arrastra = Girar cámara</span>
+        <span style="margin-left:12px;">⌨️ WASD o Flechas = Mover</span>
+      </div>
       <!-- Contenedor para la escena 3D -->
       <div id="threejs-canvas"></div>
       <script type="module">
-        import { crearArbol } from './Modelos/arbol.js';
-        import { crearEdificio } from './Modelos/edificio.js';
         import { crearTerreno } from './Modelos/terreno.js';
         import { ControlesCamara } from './Controladores/controles.js';
 
