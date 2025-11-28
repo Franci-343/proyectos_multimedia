@@ -63,20 +63,7 @@
         scene.add(terreno);
         
 
-        // Crear varios árboles alrededor del edificio
-        const posicionesArboles = [
-          { x: -2, z: -2 },
-          { x: 2, z: -2 },
-          { x: -2, z: 2 },
-          { x: 3, z: 0 },
-          { x: -3, z: 1 }
-        ];
-
-        posicionesArboles.forEach(pos => {
-          const arbol = crearArbol();
-          arbol.position.set(pos.x, 0, pos.z);
-          scene.add(arbol);
-        });
+       
 
         // Agregar iluminación para que se vea más realista
         const luzAmbiente = new THREE.AmbientLight(0xffffff, 0.6);
